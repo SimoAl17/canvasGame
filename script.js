@@ -28,23 +28,12 @@ function checkCollision(player, wall) {
     const collidingX = player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x;
     const collidingY = player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y;
     if (collidingX && collidingY) {
-        player.x = player.x - 2;
+        console.log(player.x);
+        player.x = Math.round(Math.round(player.x/10)*10);
         player.speedX = player.speedX * 0.9;
         if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
-            player.x = player.x + 2;
-            player.y = player.y - 2;
-            player.speedY = player.speedY * 0.9;
-            if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
-                player.y = player.y + 2;
-                player.x = player.x + 2;
-                player.speedX = player.speedX * 0.9;
-                if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
-                    player.x = player.x - 2;
-                    player.y = player.y + 2;
-                    player.speedY = player.speedY * 0.9;
-                    
-                }
-            }
+            player.y = Math.round(Math.round(player.y/10)*10);
+            player.speedY = player.speedY * 0.9; 
         }
 
        /*
