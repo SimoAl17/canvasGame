@@ -21,28 +21,67 @@ setInterval(() => {
         }
         sprite.update(canvas, controller);
     }
-}, 30);
+}, 50);
 
 function checkCollision(player, wall) {
 
     const collidingX = player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x;
     const collidingY = player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y;
     if (collidingX && collidingY) {
-        if (player.x < wall.x + wall.w) {
-            //player.x = player.x + 0.1;
-            console.log("collisione sinistra");
-        };
-        if (player.y - player.h > wall.y){
-            //player.y = player.y - 0.1;
-            console.log("collisione sotto");
-        };
-        if (player.x + player.w > wall.x) {
-            //player.x = player.x - 0.1;
-            console.log("collisione destra");
-        };
-        if (player.y < wall.y - wall.h){
-            //player.y = player.y + 0.1;
-            console.log("collisione sopra");
-        };
+        player.x = player.x - 2;
+        player.speedX = player.speedX * 0.9;
+        if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
+            player.x = player.x + 2;
+            player.y = player.y - 2;
+            player.speedY = player.speedY * 0.9;
+            if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
+                player.y = player.y + 2;
+                player.x = player.x + 2;
+                player.speedX = player.speedX * 0.9;
+                if ((player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x) && (player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y)) {
+                    player.x = player.x - 2;
+                    player.y = player.y + 2;
+                    player.speedY = player.speedY * 0.9;
+                    
+                }
+            }
+        }
+
+       /*
+        if (player.speedX > 0 && player.speedY > 0) {
+            player.x = player.x - 1;
+            player.y = player.y - 1;
+        }
+        if (player.speedX < 0 && player.speedY < 0) {
+            player.x = player.x + 1;
+            player.y = player.y + 1;
+        }
+        if (player.speedX > 0 && player.speedY < 0) {
+            player.x = player.x - 1;
+            player.y = player.y + 1;
+        }
+        if (player.speedX < 0 && player.speedY > 0) {
+            player.x = player.x + 1;
+            player.y = player.y - 1;
+        }*/
+        /*if (player.speedX > 0) {
+            player.x = player.x - 2;
+            player.speedX = player.speedX * 0.05;
+            console.log("destra");
+        } else if (player.speedX < 0) {
+            player.x = player.x + 2;
+            player.speedX = player.speedX * 0.05;
+            console.log("sinistra");
+        }
+        if (player.speedY < 0) {
+            player.y = player.y + 2;
+            player.speedY =  player.speedY * 0.05;
+            console.log("sopra");
+        } else if (player.speedY > 0) {
+            player.y = player.y - 2;
+            player.speedY = player.speedY * 0.05;
+            console.log("sotto");
+        }*/
+
     }
 }
