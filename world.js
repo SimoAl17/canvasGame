@@ -1,4 +1,5 @@
 class World {
+  
   static build(level) {
 
     const sprites = [];
@@ -6,6 +7,7 @@ class World {
     const columns = level[0].length;
     const rows = level.length;
     const side = canvas.width / columns;
+    
 
     for (let i = 0; i < rows; i++) {
       const row = level[i];
@@ -31,7 +33,14 @@ class World {
       
           case 3:
             return new RectSprite(side * column, side * row, side, side, 0, 0, "blue");
+
+          case 5:
+            return new ExitSprite(side * column, side * row, side, side, 0, 0);
           
+          case 6:
+            return new EnemySprite(side * column, side * row, side, side, 2, 0);
+            
+
           default:
             return new PlayerSprite(side * column, side * row, side, side, 0, 0);
       }

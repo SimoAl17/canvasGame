@@ -59,23 +59,83 @@ class PlayerSprite extends RectSprite {
     constructor(x, y, w, h, speedX, speedY){
         super(x, y, w, h, speedX, speedY, "magenta");
         this.isPlayer = true;
+        this.isActive = true;
+        this.isSolid = true;
+        this.isJumping = false;
+        this.startX = x;
+        this.startY = y;
+        this.isWinner = false;
+        this.isLoser = false;
     }
 
     update(canvas, controller) {
         if (this.isPlayer) {
             if (controller.isUpClicked) {
-                this.speedY += -0.1; 
+                if (this.isJumping === false) {
+                    this.speedY += -10;
+                    this.isJumping = true;     
+                }
+                
             }
-            if (controller.isDownClicked) {
-                this.speedY += 0.1; 
-            }
+            // if (controller.isDownClicked) {
+            //     this.speedY += 0.1; 
+            // }
             if (controller.isRightClicked) {
-                this.speedX += 0.1; 
+                this.speedX += 0.2; 
             }
             if (controller.isLeftClicked) {
-                this.speedX += -0.1; 
+                this.speedX += -0.2; 
             }
         }
+
+        const gravity = Physics.getGravity();
+        const friction = Physics.getFriction();
+
+        this.speedX *= friction;
+        this.speedY *= friction;
+
+        this.speedX += gravity.x;
+        this.speedY += gravity.y;
+
         super.update(canvas);
     }
+
+    manageCollision(sprite, isHorizontal) {
+        if (sprite.isEnemy) {
+            this.isLoser = true;
+        }
+        if (isHorizontal) {
+            this.isJumping = false;    
+        }
+        if (sprite.isExit) {
+            this.isWinner = true;
+        }
+
+        
+    }
+
+        
+}
+
+class ExitSprite extends RectSprite {
+    constructor(x, y, w, h, speedX, speedY){
+        super(x, y, w, h, speedX, speedY, "green");
+        this.isExit = true;
+        this.isSolid = true;
+    }
+}
+
+class EnemySprite extends RectSprite {
+    constructor(x, y, w, h, speedX, speedY){
+        super(x, y, w, h, speedX, speedY, "yellow");
+        this.isEnemy = true;
+        this.isActive = true;
+        this.isSolid = true;
+    }
+
+    manageCollision() {
+        this.speedX = this.speedX * -1;
+        
+    }
+
 }

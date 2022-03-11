@@ -1,9 +1,13 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
-const sprites = World.build(Levels.getLevel(1));
+
+let currentLevel = 0;
+let sprites = World.build(Levels.getLevel(currentLevel));
+
+
 
 const controller = new Controller();
-
+/*
 setInterval(() => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -28,6 +32,7 @@ function checkCollision(player, wall) {
     const collidingX = player.x < (wall.x + wall.w) && (player.x + player.w) > wall.x;
     const collidingY = player.y < (wall.y + wall.h) && (player.y + player.h) > wall.y;
     if (collidingX && collidingY) {
+        
         console.log(player.x);
         player.x = Math.round(Math.round(player.x/10)*10);
         player.speedX = player.speedX * 0.9;
@@ -36,7 +41,7 @@ function checkCollision(player, wall) {
             player.speedY = player.speedY * 0.9; 
         }
 
-       /*
+    
         if (player.speedX > 0 && player.speedY > 0) {
             player.x = player.x - 1;
             player.y = player.y - 1;
@@ -70,7 +75,43 @@ function checkCollision(player, wall) {
             player.y = player.y - 2;
             player.speedY = player.speedY * 0.05;
             console.log("sotto");
-        }*/
+        }
 
     }
-}
+}*/
+
+
+setInterval(() => {
+
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  
+    for (const sprite of sprites) {
+        if (sprite.isLoser) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            //document.body.style.backgroundImage = "url('./you-died.png')";
+            //document.body.style.backgroundSize = "cover";
+            setTimeout(() => {
+
+            }, 5000);
+            window.location.reload;
+            
+        }
+        if (sprite.isWinner) {
+            currentLevel++;
+            sprite.isWinner = false;
+            sprites = World.build(Levels.getLevel(currentLevel));
+        }
+      CollisionDetector.checkCollisions(sprite, sprites);
+  
+      sprite.draw(context);
+  
+      sprite.update(canvas, controller);
+
+  
+    }
+  
+  
+  }, 30);
+  
+  
