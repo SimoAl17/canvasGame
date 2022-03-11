@@ -81,37 +81,37 @@ function checkCollision(player, wall) {
 }*/
 
 
-setInterval(() => {
+const bu = setInterval(() => {
 
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-  
-    for (const sprite of sprites) {
-        if (sprite.isLoser) {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            //document.body.style.backgroundImage = "url('./you-died.png')";
-            //document.body.style.backgroundSize = "cover";
-            setTimeout(() => {
-
-            }, 5000);
-            window.location.reload;
-            
-        }
+    
+        for (const sprite of sprites) {
+        
         if (sprite.isWinner) {
             currentLevel++;
             sprite.isWinner = false;
             sprites = World.build(Levels.getLevel(currentLevel));
         }
-      CollisionDetector.checkCollisions(sprite, sprites);
-  
-      sprite.draw(context);
-  
-      sprite.update(canvas, controller);
+        if (sprite.isLoser) {
+            perso();
+        }
+        CollisionDetector.checkCollisions(sprite, sprites);
+        sprite.draw(context);
+        sprite.update(canvas, controller);
 
+        }
   
-    }
-  
-  
-  }, 30);
-  
-  
+}, 30);
+
+  function perso() {
+    sprites = [];
+    canvas.style.border = "none"
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    document.body.style.backgroundImage = "url('./you-died.png')";
+    document.body.style.backgroundSize = "cover";
+    setTimeout(() => {
+        window.location.reload();
+
+    }, 4000);      
+  }
