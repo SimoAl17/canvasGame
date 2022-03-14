@@ -139,3 +139,11 @@ class EnemySprite extends RectSprite {
     }
 
 }
+
+class WaterSprite extends RectSprite{
+    constructor(x, y, w, h, speedX, speedY){
+        super(x, y, w, h, speedX, speedY, "blue");
+        this.isSolid = false;
+    }
+
+}

@@ -93,6 +93,9 @@ const bu = setInterval(() => {
             sprite.isWinner = false;
             sprites = World.build(Levels.getLevel(currentLevel));
         }
+        if (sprite.isPlayer && (sprite.y + sprite.h) > canvas.height) {
+            perso();
+        }
         if (sprite.isLoser) {
             perso();
         }

@@ -32,7 +32,7 @@ class World {
             return new RectSprite(side * column, side * row, side, side, 0, 0, "lightblue");
       
           case 3:
-            return new RectSprite(side * column, side * row, side, side, 0, 0, "blue");
+            return new WaterSprite(side * column, side * row, side, side, 0, 0);
 
           case 5:
             return new ExitSprite(side * column, side * row, side, side, 0, 0);
